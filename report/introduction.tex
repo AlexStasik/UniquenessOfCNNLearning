@@ -1,0 +1,29 @@
+\section{Introduction}
+
+The main component of \textit{convolutional neural networks} are \textit{convolutional layers}. Convolutional layers consists of \textit{filters} which are convolved with the input to the layer.
+A nonlinear function, typically the rectified linear unit (ReLU) is applied to the result of this convolution.
+A single convolutional layer can contain multiple filters, each of which are convolved with the input to the layer.
+Each filter is different from the others and will produce a unique output, so the output from a convolutional layer will be many diverging nonlinear transformations of its input.
+
+The nature of these filters are poorly understood.
+There are an infinite amount of possible filters and different instantiations of a network trained for a single task will produce different filters, but are there any common structures present in all or many of the same networks trained for the same task?
+And can these structures be used to generate networks that will perform well on other tasks of the same nature?
+
+We investigate this by training small convolutional neural networks on half of the CIFAR10 dataset.
+We first try to identify commonalities between the filters of different instantiations of the same network trained on the same dataset. We then try to see whether or not these commonalities can be used to construct filters that will perform equally well on the other half of the dataset.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,7 +1,35 @@
 \section{Results}
 
-The cifar10 dataset was split into two halves that were found to give roughly equal classification accuracy on a single network trained to classify all 10 classes. However, when the data set was split up it turned out that one was somewhat easier than the other.  
+The cifar10 dataset was split into two halves that were found to give roughly equal classification accuracy on a single network trained to classify all 10 classes. However, when the data set was split up it turned out that one was somewhat easier than the other. We call these new datasets cifar5 dataset 1 and 2.
 
 \subsection{Cifar5 transfer learning}
 
-After having trained a network on each of the datasets, freezing the first layer and transfer learning on the opposite dataset showed that the performance going one way was 
+To begin with, a network with the 3 convolutional layers, consisting of 4, 8 and 16 filters respectively, and a single fully connected layer consisting of 128 neurons was trained multiple times on one of the two cifar10 halves. First, the networks were trained for 100 epochs and the best performing network state was saved. After the initial training, the best network state was loaded, the first layer was frozen and all subsequent layers were reinitialized, and for each of the two cifar5 datasets the network was trained for 100 more epochs. The continued training on the same network served as a reference point. This procedure was repeated 7 times for each dataset.
+
+\begin{figure}[h!]
+\begin{center}
+  \includegraphics[width=\textwidth]{\string~/Dropbox/uniqueness_cnn_figures/training_transfer_learning_cifar5.pdf}
+\end{center}
+\caption{Left side: initial training on both datasets. Right side: transfer learning with the first convolutional layer frozen.}
+\label{fig:init_training_cifar5}
+\end{figure}
+
+\Fref{fig:init_training_cifar5} shows the training curves. The left side shows the initial training, from which the first convolutional layer is taken for the transfer learning shown on the right side. 
+As can be seen, the network performs consistently better on dataset 2 compared to dataset 1. However, forcing the network to use the first convolutional layer trained on either of the dataset doesn't significantly hinder its performance on the opposite dataset. Regardess of whether the first layer was taken from the network trained on the same dataset or the other dataset, the perfomance was roughly equal.
+
+To investigate whether or not this was due to the fact that the first filters were picking up the same features, the filters were flattened and rescaled to unity, and the dot product was computed between all filter pairs over all networks, for the same colour channels. The absolute values of the dot products are shown in \Fref{fig:dot_products_cifar5}. The values are generally low, and there doesn't seem to be any specific filters present in all networks. This implies that the network can find many roughly equally good solutions to its task. Since the transfer learning showed that the first filters learned on one dataset can be used to get roughly equally good performance on the other dataset, it also seems that the solutions found on one dataset will work equally well on the other dataset.
+
+\begin{figure}[h!]
+  \begin{subfigure}{\textwidth}
+    \includegraphics[width=\textwidth]{\string~/Dropbox/uniqueness_cnn_figures/dset1_dot_products.pdf}
+  \end{subfigure}
+  \begin{subfigure}{\textwidth}
+    \includegraphics[width=\textwidth]{\string~/Dropbox/uniqueness_cnn_figures/dset2_dot_products.pdf}
+  \end{subfigure}
+  \begin{subfigure}{\textwidth}
+    \includegraphics[width=\textwidth]{\string~/Dropbox/uniqueness_cnn_figures/dset1_dset2_dot_products.pdf}
+  \end{subfigure}
+  \caption{Absolute value of dot products between all filters, which have been flattened and normalized, for each colour channel.}
+  \label{fig:dot_products_cifar5}
+\end{figure}
+

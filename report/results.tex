@@ -90,6 +90,34 @@ With the random filter, the accuracy does not change significantly with the rota
   \begin{center}
     \includegraphics{\string~/Dropbox/uniqueness_cnn_figures/rotation_accuracies.pdf}
   \end{center}
+  \vspace{5mm}
   \caption{Highest achieved accuracy for each rotation of the filters, both the gradient filter and the random one.}
   \label{fig:rotated_filter_accuracies}
 \end{figure}
+
+
+\subsection{Accuracy as a function of total parameters}
+
+An attempt was made to see whether it is possible to predict the accuracy a network can achieves by increasing the total number of trainable parameters in the network. Two types of network architectures were chosen, one with an exponentially increasing number of filters in the convolutional layers, doubling in size for each layer, and one with a constant number of filters in the convolutional layers. A network with three convolutional layers were used, and a single dense layer. It was trained with a dense layer consisted of either 32, 64 or 128 neurons, and for the networks of constant-size convolutional layers the number of filters were 2, 4, 8, 16, 32, 64 and 160. For the exponentially increasing one, the first layer started out with 2, 4, 8, 16, 32 and 64 filters. For each combination of number of filters in the convolutional layers and dense neurons, the network was trained for 100 epochs, and the function $y = a - e^{-b/x}$ was fitted to the best achieved accuracies as a function of the total number of parameters in the network. \Fref{fig:accuracy_parameters_all} shows the data points and a least squares fit. The fit is poor and underestimates the accuracy with a high number of parameters.
+
+\Fref{fig:accuracy_parameters_split} shows the data points grouped by the number of dense neurons and network type. In this plot, the curve is fitted to all but the highest parameter data point. The fit here is much better than in \Fref{fig:accuracy_parameters_all}, but it still fails to predict the accuracy of the networks with a high number of parameters.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics{\string~/Dropbox/uniqueness_cnn_figures/accuracy_parameters_all.pdf}
+  \end{center}
+  \vspace{5mm}
+  \caption{Highest achieved accuracy as a function of the total number of parameters in the network. Orange points are from the networks with constant numbers of filters, blue points are from the networks with exponentially increasing number of filters. The orange line is fitted to the orange points, the blue line to the blue points and the green line is fitted to all points.}
+  \label{fig:accuracy_parameters_all}
+\end{figure}
+
+
+\begin{figure}
+  \begin{center}
+    \includegraphics{\string~/Dropbox/uniqueness_cnn_figures/accuracy_parameters_split.pdf}
+  \end{center}
+  \vspace{5mm}
+  \caption{Highest achieved accuracy as a function of the total number of parameters in the network. For each plot, the number of dense neurons is fixed. The top row is from networks with exponentially increasing numbers of filters, and the bottom row is from networks  with constant number of filters. The curves are fitted to all but the rightmost data point in each plot.}
+  \label{fig:accuracy_parameters_split}
+\end{figure}
+
